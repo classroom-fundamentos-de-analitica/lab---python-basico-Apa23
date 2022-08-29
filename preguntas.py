@@ -11,54 +11,53 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
-
+import csv
+from msilib.schema import ControlEvent
+from operator import index
 
 def pregunta_01():
-    """
-    Retorne la suma de la segunda columna.
-
-    Rta/
-    214
-
-    """
-    return
+    sum=0
+    with open('data.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='	')
+        for row in csv_reader:
+            sum+= int(row[1])
+    return sum
 
 
 def pregunta_02():
-    """
-    Retorne la cantidad de registros por cada letra de la primera columna como la lista
-    de tuplas (letra, cantidad), ordendas alfabéticamente.
+    columna = []
+    letras=[]
+    apariciones = []
+    with open('data.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='	')
+        for row in csv_reader:
+                columna.append(row[0])
+                if(not row[0] in letras):
+                    letras.append(row[0])
+    letras.sort()
+    for letra in letras:
+        apariciones.append((letra, columna.count(letra)))
 
-    Rta/
-    [
-        ("A", 8),
-        ("B", 7),
-        ("C", 5),
-        ("D", 6),
-        ("E", 14),
-    ]
-
-    """
-    return
-
+    return apariciones
 
 def pregunta_03():
-    """
-    Retorne la suma de la columna 2 por cada letra de la primera columna como una lista
-    de tuplas (letra, suma) ordendas alfabeticamente.
+    letras=[]
+    conteo = []
+    suma=[]
+    with open('data.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='	')
+        for row in csv_reader:
+            if(not row[0] in letras):
+                letras.append(row[0])
+                conteo.append(int(row[1]))
+            else:
+                conteo[letras.index(row[0])]+=int(row[1])
+    for letra in letras:
+        suma.append((letra,conteo[letras.index(letra)]))
+    suma.sort(reverse=False)
+    return suma
 
-    Rta/
-    [
-        ("A", 53),
-        ("B", 36),
-        ("C", 27),
-        ("D", 31),
-        ("E", 67),
-    ]
-
-    """
-    return
-
+print(pregunta_03())
 
 def pregunta_04():
     """
