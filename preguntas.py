@@ -12,8 +12,6 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 import csv
-from msilib.schema import ControlEvent
-from operator import index
 
 def pregunta_01():
     sum=0
@@ -57,32 +55,22 @@ def pregunta_03():
     suma.sort(reverse=False)
     return suma
 
-print(pregunta_03())
-
 def pregunta_04():
-    """
-    La columna 3 contiene una fecha en formato `YYYY-MM-DD`. Retorne la cantidad de
-    registros por cada mes, tal como se muestra a continuación.
-
-    Rta/
-    [
-        ("01", 3),
-        ("02", 4),
-        ("03", 2),
-        ("04", 4),
-        ("05", 3),
-        ("06", 3),
-        ("07", 5),
-        ("08", 6),
-        ("09", 3),
-        ("10", 2),
-        ("11", 2),
-        ("12", 3),
-    ]
-
-    """
-    return
-
+    
+    meses=[]
+    columna = []
+    apariciones = []
+    with open('data.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='	')
+        for row in csv_reader:
+            mes = row[2].split("-")[1]
+            columna.append(mes)
+            if(not mes in meses):
+                meses.append(mes)
+    meses.sort()
+    for mes in meses:
+        apariciones.append((mes, columna.count(mes)))
+    return apariciones
 
 def pregunta_05():
     """
