@@ -73,47 +73,51 @@ def pregunta_04():
     return apariciones
 
 def pregunta_05():
-    """
-    Retorne una lista de tuplas con el valor maximo y minimo de la columna 2 por cada
-    letra de la columa 1.
-
-    Rta/
-    [
-        ("A", 9, 2),
-        ("B", 9, 1),
-        ("C", 9, 0),
-        ("D", 8, 3),
-        ("E", 9, 1),
-    ]
-
-    """
-    return
-
+    letras=[]
+    colMax = []
+    colMin = []
+    maximos = []
+    with open('data.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='	')
+        for row in csv_reader:
+            if(not row[0] in letras):
+                letras.append(row[0])
+                colMax.append(int(row[1]))
+                colMin.append(int(row[1]))
+            else:
+                if(colMax[letras.index(row[0])]<int(row[1])):
+                    colMax[letras.index(row[0])]=int(row[1])
+                if(colMin[letras.index(row[0])]>int(row[1])):
+                    colMin[letras.index(row[0])]=int(row[1])
+    for letra in letras:
+        maximos.append((letra,colMax[letras.index(letra)],colMin[letras.index(letra)]))
+    maximos.sort(reverse=False)
+    return maximos
 
 def pregunta_06():
-    """
-    La columna 5 codifica un diccionario donde cada cadena de tres letras corresponde a
-    una clave y el valor despues del caracter `:` corresponde al valor asociado a la
-    clave. Por cada clave, obtenga el valor asociado mas pequeño y el valor asociado mas
-    grande computados sobre todo el archivo.
-
-    Rta/
-    [
-        ("aaa", 1, 9),
-        ("bbb", 1, 9),
-        ("ccc", 1, 10),
-        ("ddd", 0, 9),
-        ("eee", 1, 7),
-        ("fff", 0, 9),
-        ("ggg", 3, 10),
-        ("hhh", 0, 9),
-        ("iii", 0, 9),
-        ("jjj", 5, 17),
-    ]
-
-    """
-    return
-
+    letras=[]
+    colMax = []
+    colMin = []
+    dic = []
+    with open('data.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='	')
+        for row in csv_reader:
+            for cod in row[4].split(','):
+                letra = cod.split(':')[0]
+                codigo = cod.split(':')[1]
+                if(not letra in letras):
+                    letras.append(letra)
+                    colMax.append(int(codigo))
+                    colMin.append(int(codigo))
+                else:
+                    if(colMax[letras.index(letra)]<int(codigo)):
+                        colMax[letras.index(letra)]=int(codigo)
+                    if(colMin[letras.index(letra)]>int(codigo)):
+                        colMin[letras.index(letra)]=int(codigo)
+    for letra in letras:
+        dic.append((letra,colMin[letras.index(letra)],colMax[letras.index(letra)]))
+    dic.sort(reverse=False)
+    return dic
 
 def pregunta_07():
     """
